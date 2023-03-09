@@ -20,24 +20,24 @@ data "aws_subnet_ids" "default_subnet" {
 }
 
 resource "aws_instance" "prod-server-1" {
-  ami             = "ami-011899242bb902164"
-  instance_type   = "t2.micro"
-  security_groups = [aws_security_group.instances-sg.name]
+  ami             = var.instance_ami
+  instance_type   = var.instance_type
+  security_groups = [aws_security_group.instances-security-group.name]
 }
 
 resource "aws_instance" "prod-server-2" {
-  ami             = "ami-011899242bb902164"
-  instance_type   = "t2.micro"
-  security_groups = [aws_security_group.instances-sg.name]
+  ami             = var.instance_ami
+  instance_type   = var.instance_type
+  security_groups = [aws_security_group.instances-security-group.name]
 }
 
-resource "aws_security_group" "instances-sg" {
-  name = "instances-sg"
+resource "aws_security_group" "instances-security-group" {
+  name = "instances-security-group"
 }
 
 resource "aws_security_group_rule" "allow-inbound" {
   type              = "ingress"
-  security_group_id = aws_security_group.instances-sg.id
+  security_group_id = aws_security_group.instances-security-group.id
 
   from_port   = 8080
   to_port     = 8080
